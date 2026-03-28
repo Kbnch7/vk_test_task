@@ -8,3 +8,7 @@ class UserResponse(BaseModel):
     login: str
     password: str
     locktime: datetime
+
+
+class UnlockUsersResponse(BaseModel):
+    users_unlocked: int

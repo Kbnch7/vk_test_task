@@ -1,2 +1,2 @@
-from .response import UserResponse
+from .response import UserResponse, UnlockUsersResponse
 from .request import UserCreate
