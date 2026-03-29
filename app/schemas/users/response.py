@@ -1,11 +1,11 @@
 from uuid import UUID
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 class UserResponse(BaseModel):
     id: UUID
-    login: str
+    login: EmailStr
     password: str
     locktime: datetime
 
