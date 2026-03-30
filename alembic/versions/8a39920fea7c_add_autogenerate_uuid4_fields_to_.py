@@ -5,16 +5,15 @@ Revises: 40d8dda7da19
 Create Date: 2026-03-28 00:35:07.625390
 
 """
-from typing import Sequence, Union
+from collections.abc import Sequence
 
 from alembic import op
 
-
 # revision identifiers, used by Alembic.
 revision: str = '8a39920fea7c'
-down_revision: Union[str, Sequence[str], None] = '40d8dda7da19'
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | Sequence[str] | None = '40d8dda7da19'
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

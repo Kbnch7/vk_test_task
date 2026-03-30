@@ -1,8 +1,8 @@
 import socket
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.exc import SQLAlchemyError
 from fastapi.exceptions import HTTPException
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.config import DATABASE_URL
 from app.database.logger import logger
@@ -28,6 +28,6 @@ async def get_db():
     except (SQLAlchemyError, socket.gaierror) as e:
         logger.error(f"Failed to connect to DB: {e}")
         raise HTTPException(
-            status_code=500, 
+            status_code=500,
             detail="Database connection failed"
-        )
+        ) from (SQLAlchemyError, socket.gaierror)

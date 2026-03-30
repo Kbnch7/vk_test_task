@@ -5,15 +5,13 @@ Revises: 8a39920fea7c
 Create Date: 2026-03-28 00:57:35.351946
 
 """
-from typing import Sequence, Union
-
-
+from collections.abc import Sequence
 
 # revision identifiers, used by Alembic.
 revision: str = 'd35c4cb929c2'
-down_revision: Union[str, Sequence[str], None] = '8a39920fea7c'
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | Sequence[str] | None = '8a39920fea7c'
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

@@ -1,18 +1,22 @@
 import uuid
+from unittest.mock import patch
 
 import pytest
-from unittest.mock import patch
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-from app.services.users import (
-    create_user_service, 
-    get_users_service, 
-    lock_first_avaliable_user_service, 
-    unlock_users_service
-)
-from app.services.exceptions import UserAlreadyExistsError, DatabaseError, NoAvailiableUserError
-from app.schemas.users import UserCreate
 from app.database.models import User
+from app.schemas.users import UserCreate
+from app.services.exceptions import (
+    DatabaseError,
+    NoAvailiableUserError,
+    UserAlreadyExistsError,
+)
+from app.services.users import (
+    create_user_service,
+    get_users_service,
+    lock_first_avaliable_user_service,
+    unlock_users_service,
+)
 
 
 def get_valid_user_data(login="test_user@mail.ru"):
@@ -33,7 +37,7 @@ async def test_create_user_success(
 ):
     user_in = get_valid_user_data()
     mock_encrypt.return_value = "hashed_password"
-    
+
     mock_user = User(id=uuid.uuid4(), login="test_user", password="hashed_password")
     mock_repo.return_value = mock_user
     mock_decrypt.return_value = "secure_password_123"
@@ -44,11 +48,10 @@ async def test_create_user_success(
     mock_repo.assert_called_once()
 
 @pytest.mark.asyncio
-@patch("app.services.users.create_user_repo")
-@patch("app.services.users.encrypt_password")
-async def test_create_user_already_exists(
-    mock_encrypt, mock_repo, mock_db
-):
+async def test_create_user_already_exists(mocker, mock_db):
+    mocker.patch("app.services.users.encrypt_password")
+    mock_repo = mocker.patch("app.services.users.create_user_repo")
+
     user_in = get_valid_user_data("existing_use@mail.ri")
     mock_repo.side_effect = IntegrityError(None, None, None)
 

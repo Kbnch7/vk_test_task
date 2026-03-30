@@ -1,12 +1,10 @@
+import sys
 from logging.config import fileConfig
+from pathlib import Path
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
-
-import sys
-from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))
 
@@ -72,7 +70,10 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata, compare_server_default=True, compare_type=True
+            connection=connection,
+            target_metadata=target_metadata,
+            compare_server_default=True,
+            compare_type=True
         )
 
         with context.begin_transaction():

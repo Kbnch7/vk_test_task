@@ -6,7 +6,14 @@ from fastapi_healthchecks.api.router import HealthcheckRouter, Probe
 from fastapi_healthchecks.checks.postgres import PostgreSqlCheck
 
 from .api.v1 import users_router
-from .config import POSTGRES_USER, POSTGRES_PASSWORD, DATABASE_HOST, DATABASE_NAME, DATABASE_PORT, setup_logger
+from .config import (
+    DATABASE_HOST,
+    DATABASE_NAME,
+    DATABASE_PORT,
+    POSTGRES_PASSWORD,
+    POSTGRES_USER,
+    setup_logger,
+)
 
 setup_logger()
 logger = logging.getLogger("my_app")
@@ -25,7 +32,13 @@ app.include_router(
         Probe(
             name="readiness",
             checks=[
-                PostgreSqlCheck(host=DATABASE_HOST, username=POSTGRES_USER, password=POSTGRES_PASSWORD, port=DATABASE_PORT, database=DATABASE_NAME),
+                PostgreSqlCheck(
+                    host=DATABASE_HOST,
+                    username=POSTGRES_USER,
+                    password=POSTGRES_PASSWORD,
+                    port=DATABASE_PORT,
+                    database=DATABASE_NAME
+                ),
             ],
         ),
         Probe(
