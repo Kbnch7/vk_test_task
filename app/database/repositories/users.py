@@ -23,7 +23,6 @@ async def get_users_repo(session: AsyncSession, limit: int, skip: int) -> List[U
         .limit(limit)
     )
     users = result.scalars().all()
-    print(users)
     return users
 
 async def lock_user_repo(session: AsyncSession, days_to_lock: int = 0, hours_to_lock: int = 1) -> User | None:

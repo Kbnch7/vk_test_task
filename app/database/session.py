@@ -1,5 +1,11 @@
+import socket
+
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.exc import SQLAlchemyError
+from fastapi.exceptions import HTTPException
+
 from app.config import DATABASE_URL
+from app.database.logger import logger
 
 engine = create_async_engine(
     DATABASE_URL,
@@ -16,9 +22,12 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 async def get_db():
-    """Генератор асинхронных сессий для dependency injection"""
-    async with AsyncSessionLocal() as session:
-        try:
+    try:
+        async with AsyncSessionLocal() as session:
             yield session
-        finally:
-            pass
+    except (SQLAlchemyError, socket.gaierror) as e:
+        logger.error(f"Failed to connect to DB: {e}")
+        raise HTTPException(
+            status_code=500, 
+            detail="Database connection failed"
+        )

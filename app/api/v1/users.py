@@ -8,6 +8,7 @@ from app.database import get_db
 from app.schemas.users import UserResponse, UserCreate, UnlockUsersResponse
 from app.schemas.common import Message
 from app.services.exceptions import UserAlreadyExistsError, DatabaseError, NoAvailiableUserError
+from app.api import logger
 
 '''
 POST /users/
@@ -35,9 +36,10 @@ async def create_user_handler(
             detail=str(e)
         )
     except DatabaseError:
+        logger.error("Database connection failed")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database error"
+            detail="Database connection failed"
         )
     else:
         return user
@@ -56,9 +58,10 @@ async def get_users_handler(
         users = await get_users_service(db, limit, skip)
         return users
     except DatabaseError:
+        logger.error("Database connection failed")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database error"
+            detail="Database connection failed"
         )
 
 @users_router.patch('/lock/', response_model=UserResponse)
@@ -76,9 +79,10 @@ async def lock_first_availible_user_handler(
             detail="No availible user found"
         )
     except DatabaseError:
+        logger.error("Database connection failed")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database error"
+            detail="Database connection failed"
         )
 
 @users_router.post('/unlock/', response_model=UnlockUsersResponse)
@@ -89,7 +93,8 @@ async def unlock_users_handler(
         amount_of_users = await unlock_users_service(db)
         return UnlockUsersResponse(users_unlocked=amount_of_users)
     except DatabaseError:
+        logger.error("Database connection failed")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database error"
+            detail="Database connection failed"
         )

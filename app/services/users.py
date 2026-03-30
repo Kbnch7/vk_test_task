@@ -8,6 +8,7 @@ from app.database.models import User
 from app.database.repositories import create_user_repo, get_users_repo, lock_user_repo, unlock_users_repo
 from app.utils.security import encrypt_password, decrypt_password, decrypt_users_password
 from .exceptions import UserAlreadyExistsError, DatabaseError, NoAvailiableUserError
+from app.services import logger
 
 
 async def create_user_service(db: AsyncSession, user_data: UserCreate) -> User:
@@ -22,6 +23,7 @@ async def create_user_service(db: AsyncSession, user_data: UserCreate) -> User:
     except IntegrityError:
         raise UserAlreadyExistsError("User already exists")
     except SQLAlchemyError:
+        logger.error("Database connection failed")
         raise DatabaseError()
 
 async def get_users_service(db: AsyncSession, limit: int, skip: int) -> List[User]:
@@ -41,6 +43,7 @@ async def lock_first_avaliable_user_service(db: AsyncSession, days_to_lock: int 
         user.password = decrypt_password(user.password)
         return user
     except SQLAlchemyError:
+        logger.error("Database connection failed")
         raise DatabaseError()
     
 async def unlock_users_service(db: AsyncSession):
@@ -49,4 +52,5 @@ async def unlock_users_service(db: AsyncSession):
             amount_of_users = await unlock_users_repo(db)
             return amount_of_users
     except SQLAlchemyError:
+        logger.error("Database connection failed")
         raise DatabaseError()

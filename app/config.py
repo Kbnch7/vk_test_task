@@ -1,7 +1,17 @@
 import os
+import logging
+
 from dotenv import load_dotenv
 
 load_dotenv()
+
+def setup_logger():
+    logging.basicConfig(
+        filemode='a',
+        filename='mylog.log',
+        format="%(asctime)s %(levelname)s %(message)s",
+        level=logging.DEBUG
+    )
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 POSTGRES_USER = os.getenv("POSTGRES_USER")

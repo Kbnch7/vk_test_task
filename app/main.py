@@ -1,11 +1,15 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_healthchecks.api.router import HealthcheckRouter, Probe
 from fastapi_healthchecks.checks.postgres import PostgreSqlCheck
 
 from .api.v1 import users_router
-from .config import DATABASE_URL, POSTGRES_USER, POSTGRES_PASSWORD, DATABASE_HOST, DATABASE_NAME, DATABASE_PORT
+from .config import POSTGRES_USER, POSTGRES_PASSWORD, DATABASE_HOST, DATABASE_NAME, DATABASE_PORT, setup_logger
 
+setup_logger()
+logger = logging.getLogger("my_app")
 
 app = FastAPI()
 app.add_middleware(
