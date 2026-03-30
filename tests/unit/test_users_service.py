@@ -15,7 +15,7 @@ from app.schemas.users import UserCreate
 from app.database.models import User
 
 
-def get_valid_user_data(login="test_user"):
+def get_valid_user_data(login="test_user@mail.ru"):
     return UserCreate(
         login=login,
         password="password",
@@ -49,7 +49,7 @@ async def test_create_user_success(
 async def test_create_user_already_exists(
     mock_encrypt, mock_repo, mock_db
 ):
-    user_in = get_valid_user_data("existing_user")
+    user_in = get_valid_user_data("existing_use@mail.ri")
     mock_repo.side_effect = IntegrityError(None, None, None)
 
     with pytest.raises(UserAlreadyExistsError):
