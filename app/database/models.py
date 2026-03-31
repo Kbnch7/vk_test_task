@@ -6,6 +6,9 @@ from sqlalchemy.sql import func
 
 Base = declarative_base()
 
+class BaseTable(Base):
+    __abstract__ = True
+
 class Env(Base):
     __tablename__ = 'env'
 

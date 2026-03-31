@@ -5,7 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_healthchecks.api.router import HealthcheckRouter, Probe
 from fastapi_healthchecks.checks.postgres import PostgreSqlCheck
 
-from .api.v1 import users_router
+from app.api.api_router import router
+
 from .config import (
     DATABASE_HOST,
     DATABASE_NAME,
@@ -26,7 +27,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.include_router(users_router, prefix='/users')
+app.include_router(router, prefix="/api")
 app.include_router(
     HealthcheckRouter(
         Probe(

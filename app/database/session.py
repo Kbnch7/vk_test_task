@@ -9,7 +9,7 @@ from app.database.logger import logger
 
 engine = create_async_engine(
     DATABASE_URL,
-    echo=True, # для разработки, убрать потом
+    echo=False, # для разработки, убрать потом
     pool_size=5,
 )
 
@@ -30,4 +30,4 @@ async def get_db():
         raise HTTPException(
             status_code=500,
             detail="Database connection failed"
-        ) from (SQLAlchemyError, socket.gaierror)
+        ) from e

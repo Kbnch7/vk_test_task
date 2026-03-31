@@ -1,4 +1,5 @@
-from .users import create_user_repo as create_user_repo
-from .users import get_users_repo as get_users_repo
-from .users import lock_user_repo as lock_user_repo
-from .users import unlock_users_repo as unlock_users_repo
+from .base_repo import BaseResourceRepo as BaseResourceRepo
+from .domain import domain_repo as domain_repo
+from .project import project_repo as project_repo
+from .users import users_repo as users_repo
+from .users_env import env_repo as env_repo
