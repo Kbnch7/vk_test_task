@@ -1,3 +1,6 @@
+"""
+Пакет для схем, используемых в проекте
+"""
 from .common.response import Message as Message
 from .domain import DomainCreate as DomainCreate
 from .domain import DomainResponse as DomainResponse

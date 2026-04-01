@@ -1,3 +1,6 @@
+"""
+Модуль для создания схем бд
+"""
 import uuid
 
 from sqlalchemy import UUID, Column, DateTime, ForeignKey, String, text

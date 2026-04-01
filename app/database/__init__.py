@@ -1,3 +1,14 @@
+"""
+Пакет для работы с бд
+
+Пакет содержит модули для:
+- Создания моделей таблиц в бд
+- Создание сессии бд
+- Логирования
+
+Пакет содержит пакеты для:
+- Создания репозиториев (Repository Layer)
+"""
 from .models import Base as Base
 from .models import Domain as Domain
 from .models import Env as Env

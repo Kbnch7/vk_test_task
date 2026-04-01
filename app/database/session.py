@@ -1,3 +1,6 @@
+"""
+Модуль для получения сессий бд
+"""
 import socket
 
 from fastapi.exceptions import HTTPException

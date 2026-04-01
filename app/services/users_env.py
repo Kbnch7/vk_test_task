@@ -1,4 +1,6 @@
-
+"""
+Модуль для создания сервиса env
+"""
 from app.database.repositories import env_repo
 from app.services import logger
 from app.services.base_service import BaseResourceService

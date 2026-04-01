@@ -1,4 +1,6 @@
-
+"""
+Модуль для создания сервиса пользователей
+"""
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
