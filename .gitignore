@@ -45,3 +45,5 @@ dist/
 
 # Ruff
 .ruff_cache
+.aider*
+__pycache__/
